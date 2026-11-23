@@ -40,9 +40,9 @@ Greets you automatically once connected — no clutter, no side dock until you c
 Tune your car speakers live with a smooth draggable curve, switch presets in one tap, and check that Data, Bluetooth, and Location are ready before you drive.
 
 <p>
-  <img src="docs/images/eq-tuner.png" width="38%" alt="T-LinkX 10-Band Car Audio EQ" />
+  <img src="docs/images/eq-tuner.png" width="42%" alt="T-LinkX 10-Band Car Audio EQ" />
   &nbsp;&nbsp;&nbsp;
-  <img src="docs/images/companion-ui.png" width="56%" alt="T-LinkX Companion App" />
+  <img src="docs/images/companion-ui.png" width="42%" alt="T-LinkX Companion App" />
 </p>
 
 </div>

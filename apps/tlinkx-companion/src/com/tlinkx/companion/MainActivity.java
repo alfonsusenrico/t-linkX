@@ -9,6 +9,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.TypedValue;
@@ -16,6 +17,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -114,9 +116,18 @@ public class MainActivity extends Activity implements CarModeService.Callback {
 
     private void styleSystemBars() {
         Window w = getWindow();
+        WindowManager.LayoutParams lp = w.getAttributes();
+        if (Build.VERSION.SDK_INT >= 30) {
+            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
+            w.setDecorFitsSystemWindows(false);
+        } else {
+            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
+        w.setAttributes(lp);
         w.setStatusBarColor(theme.bgCanvas);
         w.setNavigationBarColor(theme.bgCanvas);
         View decor = w.getDecorView();
+        decor.setBackgroundColor(theme.bgCanvas);
         int flags = decor.getSystemUiVisibility();
         if (!theme.isDark) {
             flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
@@ -154,8 +165,11 @@ public class MainActivity extends Activity implements CarModeService.Callback {
     private void buildUi() {
         ScrollView scroll = new ScrollView(this);
         scroll.setBackgroundColor(theme.bgCanvas);
-        scroll.setFitsSystemWindows(true);
         scroll.setVerticalScrollBarEnabled(false);
+        scroll.setOnApplyWindowInsetsListener((v, insets) -> {
+            v.setPadding(0, insets.getSystemWindowInsetTop(), 0, insets.getSystemWindowInsetBottom());
+            return insets.consumeSystemWindowInsets();
+        });
 
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
