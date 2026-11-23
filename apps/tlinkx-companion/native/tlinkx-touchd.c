@@ -380,7 +380,7 @@ static int find_phone_touchpanel(char *out_path, size_t out_len) {
     return found_fd;
 }
 
-static int find_avanza_touch(char *out_path, size_t out_len) {
+static int find_car_touch(char *out_path, size_t out_len) {
     DIR *dir = opendir("/dev/input");
     if (!dir) return -1;
 
@@ -459,7 +459,7 @@ static int create_uinput_touchscreen(void) {
     usetup.id.vendor = VIRT_VENDOR;
     usetup.id.product = VIRT_PRODUCT;
     usetup.id.version = VIRT_VERSION;
-    snprintf(usetup.name, UINPUT_MAX_NAME_SIZE, "T-LinkX Avanza Touchscreen");
+    snprintf(usetup.name, UINPUT_MAX_NAME_SIZE, "T-LinkX Direct Touchscreen");
 
     if (ioctl(ufd, UI_DEV_SETUP, &usetup) < 0 || ioctl(ufd, UI_DEV_CREATE) < 0) {
         log_msg("ERROR: uinput setup/create failed: %s", strerror(errno));
@@ -553,7 +553,7 @@ static void bridge_session(int touch_fd, const char *touch_path, int phone_fd, i
         log_msg("ERROR: EVIOCGRAB failed on %s: %s", touch_path, strerror(errno));
         return;
     }
-    log_msg("Grabbed Avanza touch node %s (EVIOCGRAB=1 -> TouchpadInputMapper silenced)", touch_path);
+    log_msg("Grabbed car touch node %s (EVIOCGRAB=1 -> TouchpadInputMapper silenced)", touch_path);
 
     int ufd = create_uinput_touchscreen();
     if (ufd < 0) {
@@ -601,7 +601,7 @@ static void bridge_session(int touch_fd, const char *touch_path, int phone_fd, i
         if (rc == 0) continue;
 
         if (pfds[idx_touch].revents & (POLLHUP | POLLERR | POLLNVAL)) {
-            log_msg("Avanza touch node %s disconnected (revents=0x%x)", touch_path, pfds[idx_touch].revents);
+            log_msg("Car touch node %s disconnected (revents=0x%x)", touch_path, pfds[idx_touch].revents);
             break;
         }
 
@@ -685,7 +685,7 @@ int main(void) {
         log_msg("Watching phone touchpanel %s for tap-to-wake OLED backlight", phone_path);
     }
     if (uevent_fd >= 0) {
-        log_msg("Listening on NETLINK_KOBJECT_UEVENT (0%% CPU sleep until Avanza USB plug-in)");
+        log_msg("Listening on NETLINK_KOBJECT_UEVENT (0%% CPU sleep until car USB plug-in)");
     }
 
     reload_config(true);
@@ -695,7 +695,7 @@ int main(void) {
         check_pending_disconnect();
 
         char path[128] = {0};
-        int touch_fd = find_avanza_touch(path, sizeof(path));
+        int touch_fd = find_car_touch(path, sizeof(path));
         if (touch_fd >= 0) {
             bridge_session(touch_fd, path, phone_fd, uevent_fd);
             close(touch_fd);

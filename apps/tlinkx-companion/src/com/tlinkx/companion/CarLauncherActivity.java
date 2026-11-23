@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Netflix Account-Picker inspired full-screen Car Home Launcher shown on the Avanza head unit
+ * Netflix Account-Picker inspired full-screen Car Home Launcher shown on the car head unit
  * once T-Link mirroring connects. No side dock is shown until the driver picks an app.
  */
 public class CarLauncherActivity extends Activity {
@@ -121,7 +121,7 @@ public class CarLauncherActivity extends Activity {
         brandGroup.addView(brand);
 
         TextView badge = new TextView(this);
-        badge.setText("AVANZA");
+        badge.setText("TOYOTA");
         badge.setTextColor(Color.parseColor("#38BDF8"));
         badge.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.5f);
         badge.setTypeface(Typeface.DEFAULT_BOLD);

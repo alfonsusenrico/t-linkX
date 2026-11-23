@@ -201,8 +201,8 @@ public class CarModeService extends Service {
             return;
         }
         startForegroundCompat(autoTriggered
-                ? "Avanza USB detected — preparing 1024x600 Car Mode..."
-                : "Starting Touch Bridge + Watching Avanza USB...");
+                ? "Car USB detected — preparing fullscreen Car Mode..."
+                : "Starting Touch Bridge + Watching Car USB...");
         notifyState();
 
         pollerThread = new Thread(() -> {
@@ -365,7 +365,7 @@ public class CarModeService extends Service {
         mirroringOverlaysActive.set(true);
 
         SharedPreferences sp = getSharedPreferences(PREFS, MODE_PRIVATE);
-        String eqPreset = sp.getString("eq_preset", BluetoothAudioController.EQ_AVANZA_BALANCED);
+        String eqPreset = sp.getString("eq_preset", BluetoothAudioController.EQ_CAR_BALANCED);
         boolean autoVol = sp.getBoolean("auto_vol_95", true);
 
         if (audioController != null) {
@@ -474,7 +474,7 @@ public class CarModeService extends Service {
         } else if (carDisplayActive.get()) {
             txt = "USB ATTACHED (1024x600 Ready) - Waiting for T-Link cast";
         } else {
-            txt = "Direct Touch Bridge READY - Plug into Avanza USB";
+            txt = "Direct Touch Bridge READY - Plug into Car USB";
         }
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (nm != null) {

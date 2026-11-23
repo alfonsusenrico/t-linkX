@@ -145,7 +145,7 @@ public class MainActivity extends Activity implements CarModeService.Callback {
                     .putString("touch_fit", CarDisplayController.DEFAULT_TOUCH_FIT)
                     .putBoolean("dock_enabled", true)
                     .putBoolean("dock_right", true)
-                    .putString("eq_preset", BluetoothAudioController.EQ_AVANZA_BALANCED)
+                    .putString("eq_preset", BluetoothAudioController.EQ_CAR_BALANCED)
                     .putBoolean("auto_vol_95", true)
                     .putBoolean("v2_defaults_applied", true)
                     .apply();
@@ -197,7 +197,7 @@ public class MainActivity extends Activity implements CarModeService.Callback {
         titleCol.addView(appTitle);
 
         TextView carModel = new TextView(this);
-        carModel.setText("Toyota Avanza Companion");
+        carModel.setText("Toyota T-Link Companion");
         carModel.setTextColor(theme.textSecondary);
         carModel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
         titleCol.addView(carModel);
@@ -217,7 +217,7 @@ public class MainActivity extends Activity implements CarModeService.Callback {
         LinearLayout heroCard = theme.makeCard(this);
 
         statusSubtitle = new TextView(this);
-        statusSubtitle.setText("Tap Start before plugging your phone into the Avanza USB port.");
+        statusSubtitle.setText("Tap Start before plugging your phone into your car's USB port.");
         statusSubtitle.setTextColor(theme.textSecondary);
         statusSubtitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13.5f);
         statusSubtitle.setLineSpacing(dp(3), 1f);
@@ -372,7 +372,7 @@ public class MainActivity extends Activity implements CarModeService.Callback {
         dockAudioCard.addView(eqTitle);
 
         TextView eqSub = new TextView(this);
-        eqSub.setText("Tuned for Avanza Bluetooth audio (BAM)");
+        eqSub.setText("Tuned for Toyota Display Audio (Bluetooth)");
         eqSub.setTextColor(theme.textSecondary);
         eqSub.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12.5f);
         LinearLayout.LayoutParams eqSubLp = new LinearLayout.LayoutParams(
@@ -384,7 +384,7 @@ public class MainActivity extends Activity implements CarModeService.Callback {
         eqRow.setOrientation(LinearLayout.HORIZONTAL);
         String[] eqLabels = new String[]{"Balanced", "Bass", "Vocal", "Custom"};
         String[] quickEqKeys = new String[]{
-                BluetoothAudioController.EQ_AVANZA_BALANCED,
+                BluetoothAudioController.EQ_CAR_BALANCED,
                 BluetoothAudioController.EQ_DEEP_BASS,
                 BluetoothAudioController.EQ_VOCAL_CLARITY,
                 BluetoothAudioController.EQ_CUSTOM
@@ -501,7 +501,7 @@ public class MainActivity extends Activity implements CarModeService.Callback {
         advancedContent.addView(theme.makeDivider(this));
 
         rotValue = makeValueLabel();
-        advancedContent.addView(makePickerRow("Touch Rotation", "Avanza calibrated to 270\u00B0", rotValue, v -> {
+        advancedContent.addView(makePickerRow("Touch Rotation", "Default calibrated to 270\u00B0", rotValue, v -> {
             int next = (prefs.getInt("touch_rot", CarDisplayController.DEFAULT_TOUCH_ROT) + 90) % 360;
             prefs.edit().putInt("touch_rot", next).apply();
             updateAllOptionViews();
@@ -765,17 +765,17 @@ public class MainActivity extends Activity implements CarModeService.Callback {
                     statusBadge.setText("\u25CF  Connected");
                     statusBadge.setBackground(theme.roundedRect(this, theme.accentSuccessBg, Color.TRANSPARENT, 99, false));
                     statusBadge.setTextColor(theme.accentSuccessText);
-                    statusSubtitle.setText("Connected to Avanza — 1024\u00D7600 fullscreen and direct touch are active.");
+                    statusSubtitle.setText("Connected to car display — fullscreen and direct touch are active.");
                 } else if (daemonOk && autoTrig) {
                     statusBadge.setText("\u25CF  Auto-Ready");
                     statusBadge.setBackground(theme.roundedRect(this, theme.accentSuccessBg, Color.TRANSPARENT, 99, false));
                     statusBadge.setTextColor(theme.accentSuccessText);
-                    statusSubtitle.setText("Zero-touch mode active — just plug into your Avanza USB port. No app or notification runs while unplugged.");
+                    statusSubtitle.setText("Zero-touch mode active — just plug into your car's USB port. No app or notification runs while unplugged.");
                 } else {
                     statusBadge.setText("\u25CF  Paused");
                     statusBadge.setBackground(theme.roundedRect(this, theme.bgSubtle, Color.TRANSPARENT, 99, false));
                     statusBadge.setTextColor(theme.textSecondary);
-                    statusSubtitle.setText("Tap Enable Zero-Touch Mode once so T-LinkX wakes automatically whenever you plug into your Avanza.");
+                    statusSubtitle.setText("Tap Enable Zero-Touch Mode once so T-LinkX wakes automatically whenever you plug into your car.");
                 }
 
                 if (carAct) {
@@ -808,7 +808,8 @@ public class MainActivity extends Activity implements CarModeService.Callback {
         boolean dockOn = prefs.getBoolean("dock_enabled", true);
         boolean dockRight = prefs.getBoolean("dock_right", true);
         boolean autoVol = prefs.getBoolean("auto_vol_95", true);
-        String eq = prefs.getString("eq_preset", BluetoothAudioController.EQ_AVANZA_BALANCED);
+        String eq = prefs.getString("eq_preset", BluetoothAudioController.EQ_CAR_BALANCED);
+        if ("avanza_balanced".equals(eq)) eq = BluetoothAudioController.EQ_CAR_BALANCED;
         String preset = prefs.getString("preset", CarDisplayController.DEFAULT_PRESET);
         int rot = prefs.getInt("touch_rot", CarDisplayController.DEFAULT_TOUCH_ROT);
         String fit = prefs.getString("touch_fit", CarDisplayController.DEFAULT_TOUCH_FIT);
@@ -821,7 +822,7 @@ public class MainActivity extends Activity implements CarModeService.Callback {
         chipEq.setText("EQ: " + shortEqLabel(eq));
 
         String[] quickEqKeys = new String[]{
-                BluetoothAudioController.EQ_AVANZA_BALANCED,
+                BluetoothAudioController.EQ_CAR_BALANCED,
                 BluetoothAudioController.EQ_DEEP_BASS,
                 BluetoothAudioController.EQ_VOCAL_CLARITY,
                 BluetoothAudioController.EQ_CUSTOM

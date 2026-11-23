@@ -43,7 +43,7 @@ public final class CarDisplayController {
     private static volatile boolean sBlackoutActive = false;
 
     public static String buildVirtualTouchIdc(boolean orientationAware) {
-        return "# T-LinkX Virtual Direct Touchscreen (uinput bridge for Avanza 1.5G)\n"
+        return "# T-LinkX Virtual Direct Touchscreen (uinput bridge for Toyota T-Link)\n"
                 + "device.internal = 1\n"
                 + "touch.deviceType = touchScreen\n"
                 + "touch.orientationAware = " + (orientationAware ? "1" : "0") + "\n";
@@ -54,11 +54,11 @@ public final class CarDisplayController {
         String nativeBin = ctx.getApplicationInfo().nativeLibraryDir + "/libtlinkx_touchd.so";
         String ksuBin = IDC_KSU_DIR + "/bin/tlinkx-touchd";
         String moduleProp = "id=tlinkx-touch\n"
-                + "name=T-LinkX Avanza Zero-Touch Car Mode + Touch Bridge\n"
-                + "version=v2.4.0\n"
-                + "versionCode=12\n"
+                + "name=T-LinkX Zero-Touch Car Mode + Touch Bridge\n"
+                + "version=v2.4.4\n"
+                + "versionCode=16\n"
                 + "author=T-LinkX\n"
-                + "description=Zero-touch USB AOA auto-trigger, direct touchscreen bridge for Avanza 1.5G, and boot failsafe.\n";
+                + "description=Zero-touch USB AOA auto-trigger, direct touchscreen bridge for Toyota T-Link, and boot failsafe.\n";
         String serviceSh = "#!/system/bin/sh\n"
                 + "until [ \"$(getprop sys.boot_completed)\" = \"1\" ]; do sleep 2; done\n"
                 + "wm size reset\n"
@@ -398,7 +398,7 @@ public final class CarDisplayController {
                 "echo '=== DAEMON LOG ==='; "
                         + "if [ -f " + TOUCH_LOG_PATH + " ]; then tail -n 25 " + TOUCH_LOG_PATH + "; else echo '(no daemon log yet)'; fi; "
                         + "echo '=== INPUT READER (T-LinkX) ==='; "
-                        + "dumpsys input | awk '/Device [0-9]+: T-LinkX Avanza Touchscreen/{p=1} p{print} p && /PressureScale/{p=0}' | head -n 35",
+                        + "dumpsys input | awk '/Device [0-9]+: T-LinkX Direct Touchscreen/{p=1} p{print} p && /PressureScale/{p=0}' | head -n 35",
                 5000);
         return r.out.trim();
     }

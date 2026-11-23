@@ -8,7 +8,7 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 
 /**
- * Routes Toyota Avanza steering-wheel Voice button presses (ACTION_VOICE_COMMAND via BT HFP)
+ * Routes Toyota steering-wheel Voice button presses (ACTION_VOICE_COMMAND via BT HFP)
  * into multi-tap shortcuts (1x, 2x, 3x, 4x within 650 ms).
  */
 public final class ShortcutRouter {

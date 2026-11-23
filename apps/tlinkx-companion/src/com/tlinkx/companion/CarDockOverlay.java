@@ -24,7 +24,7 @@ import java.util.Locale;
 
 /**
  * Sleek Android Auto-style floating Car Dock overlay tailored for 1024x600.
- * Defaults to the right edge for RHD vehicles (Indonesia Avanza) and collapses cleanly to an edge pill.
+ * Defaults to the right edge for RHD vehicles and collapses cleanly to an edge pill.
  */
 public final class CarDockOverlay {
     private final Context ctx;

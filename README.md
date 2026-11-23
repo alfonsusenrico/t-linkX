@@ -56,7 +56,7 @@ Tune your car speakers live with a smooth draggable curve, switch presets in one
 - **Customizable 4-App Car Home:** Pick your 4 go-to driving apps (for example: ApexOBD, Google Maps, YouTube, and YouTube Music) directly from the apps installed on your phone.
 - **Floating Car Dock & Resizable Split-Screen:** Appears cleanly on the side once you open an app (positioned for right-hand or left-hand drive). Includes quick access to Car Home, resizable Split-Screen (drag the divider to fit Maps + Music), Play/Pause, Next Track, EQ Tuner, Day/Night theme, and Phone Screen-Off.
 - **Phone Screen-Off Mode:** Turns your phone's screen completely dark while mirroring continues smoothly on the dashboard — preventing heat and screen burn-in. Touch anywhere on your phone screen to wake it back up instantly.
-- **10-Band Car Audio EQ (Memorized):** Includes 8 car-tuned presets (*Avanza Balanced*, *Deep Bass*, *Vocal & Podcast*, *Rock & Pop*, *Acoustic & Jazz*, *EDM & Hip-Hop*, *Night Drive*) plus a live **Custom** graph that stays saved across drives.
+- **10-Band Car Audio EQ (Memorized):** Includes 8 car-tuned presets (*Car Balanced*, *Deep Bass*, *Vocal & Podcast*, *Rock & Pop*, *Acoustic & Jazz*, *EDM & Hip-Hop*, *Night Drive*) plus a live **Custom** graph that stays saved across drives.
 - **Pre-Drive Readiness Check:** Automatically alerts you on your phone if Internet Data, Bluetooth, or Location is turned off, with a one-tap option to enable what's missing or continue anyway.
 
 ---
@@ -106,6 +106,6 @@ Your car's head unit only accepts its own authorized video connection from the o
 
 <div align="center">
 
-*Tested on 2024 Toyota Avanza 1.5G (JVCKENWOOD Display Audio) • Built for drivers who expected more from T-Link.*
+*Built for Toyota T-Link drivers who expected more.*
 
 </div>

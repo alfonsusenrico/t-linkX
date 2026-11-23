@@ -12,7 +12,7 @@ import android.media.audiofx.DynamicsProcessing;
 public final class BluetoothAudioController {
     private static final String PREFS = "tlinkx_prefs";
 
-    public static final String EQ_AVANZA_BALANCED = "avanza_balanced";
+    public static final String EQ_CAR_BALANCED = "car_balanced";
     public static final String EQ_DEEP_BASS = "deep_bass";
     public static final String EQ_VOCAL_CLARITY = "vocal_clarity";
     public static final String EQ_ROCK_POP = "rock_pop";
@@ -23,7 +23,7 @@ public final class BluetoothAudioController {
     public static final String EQ_OFF = "off";
 
     public static final String[] ALL_PRESETS = new String[]{
-            EQ_AVANZA_BALANCED,
+            EQ_CAR_BALANCED,
             EQ_DEEP_BASS,
             EQ_VOCAL_CLARITY,
             EQ_ROCK_POP,
@@ -66,7 +66,7 @@ public final class BluetoothAudioController {
         if (EQ_NIGHT_DRIVE.equals(preset)) return "Night Drive";
         if (EQ_CUSTOM.equals(preset)) return "Custom";
         if (EQ_OFF.equals(preset)) return "Flat / Off";
-        return "Avanza Balanced";
+        return "Car Balanced";
     }
 
     public static float[] getGainsForPreset(Context ctx, String preset) {
@@ -94,7 +94,7 @@ public final class BluetoothAudioController {
         if (EQ_CUSTOM.equals(preset)) {
             return loadCustomGains(ctx);
         }
-        // Avanza Balanced: tight sub-bass, tame door boom @ 125-250Hz, clear mids & crisp highs
+        // Car Balanced: tight sub-bass, tame door boom @ 125-250Hz, clear mids & crisp highs
         return new float[]{2.5f, 1.5f, -1.5f, -1.0f, 0.0f, 0.5f, 1.5f, 2.0f, 2.5f, 2.0f};
     }
 

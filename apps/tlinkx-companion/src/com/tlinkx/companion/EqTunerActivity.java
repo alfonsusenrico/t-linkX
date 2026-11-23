@@ -48,7 +48,10 @@ public class EqTunerActivity extends Activity {
         theme = new UiTheme(this);
         styleBars();
 
-        currentPreset = prefs.getString("eq_preset", BluetoothAudioController.EQ_AVANZA_BALANCED);
+        currentPreset = prefs.getString("eq_preset", BluetoothAudioController.EQ_CAR_BALANCED);
+        if ("avanza_balanced".equals(currentPreset)) {
+            currentPreset = BluetoothAudioController.EQ_CAR_BALANCED;
+        }
         float[] init = BluetoothAudioController.getGainsForPreset(this, currentPreset);
         System.arraycopy(init, 0, gains, 0, gains.length);
 

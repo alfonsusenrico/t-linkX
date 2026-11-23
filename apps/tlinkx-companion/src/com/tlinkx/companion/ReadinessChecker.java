@@ -105,7 +105,7 @@ public final class ReadinessChecker {
         }
         if (!st.bluetoothOn) {
             msg.append("\u2022  Bluetooth: OFF\n")
-                    .append("    Required to stream audio to your Avanza speakers (BAM).\n\n");
+                    .append("    Required to stream audio to your car speakers.\n\n");
         }
         if (!st.locationOn) {
             msg.append("\u2022  Location (GPS): OFF\n")
