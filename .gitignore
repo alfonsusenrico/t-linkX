@@ -1,0 +1,15 @@
+# Local research, pulled third-party APKs, and personal car logs
+research/
+tools/
+
+# Local agent state and notes
+PROJECT_STATE.md
+JOURNAL.md
+.keep
+
+# Build artifacts, keystores, and OS files
+build/
+*.apk
+*.keystore
+*.jks
+.DS_Store
