@@ -30,10 +30,20 @@ import java.util.Locale;
  * once T-Link mirroring connects. No side dock is shown until the driver picks an app.
  */
 public class CarLauncherActivity extends Activity {
+    private static volatile CarLauncherActivity sInstance;
     private final Handler main = new Handler(Looper.getMainLooper());
     private TextView clockView;
     private TextView dateView;
     private LinearLayout cardsRow;
+
+    public static void finishIfOpen() {
+        CarLauncherActivity act = sInstance;
+        if (act != null && !act.isFinishing()) {
+            act.runOnUiThread(() -> {
+                if (!act.isFinishing()) act.finish();
+            });
+        }
+    }
 
     private final Runnable clockTicker = new Runnable() {
         @Override
@@ -50,8 +60,15 @@ public class CarLauncherActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sInstance = this;
         setupImmersiveWindow();
         buildUi();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (sInstance == this) sInstance = null;
+        super.onDestroy();
     }
 
     @Override

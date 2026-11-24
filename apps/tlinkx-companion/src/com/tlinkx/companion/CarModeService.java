@@ -106,7 +106,13 @@ public class CarModeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String action = intent != null ? intent.getAction() : ACTION_START;
+        if (intent == null || intent.getAction() == null) {
+            if (!monitoring.get() && !carDisplayActive.get()) {
+                stopSelf();
+            }
+            return START_NOT_STICKY;
+        }
+        String action = intent.getAction();
         if (ACTION_RESET_NOW.equals(action)) {
             emit("[Failsafe] Notification Reset tapped -> restoring display & backlight!");
             new Thread(() -> deactivateCarMode()).start();
@@ -121,23 +127,31 @@ public class CarModeService extends Service {
         }
         if (ACTION_AUTO_ATTACH.equals(action)) {
             startMonitoring(true);
-            return START_STICKY;
+            return START_NOT_STICKY;
         }
         if (ACTION_APP_PICKED.equals(action)) {
-            SharedPreferences sp = getSharedPreferences(PREFS, MODE_PRIVATE);
-            if (sp.getBoolean("dock_enabled", true) && dockOverlay != null) {
-                boolean dockRight = sp.getBoolean("dock_right", true);
-                dockOverlay.show(dockRight);
-                emit("[Car Dock] App picked -> Dock shown (" + (dockRight ? "RIGHT/RHD" : "LEFT/LHD") + ")");
+            // Only show the floating Car Dock during an active car T-Link mirroring session.
+            if (carDisplayActive.get() && mirroringOverlaysActive.get()) {
+                SharedPreferences sp = getSharedPreferences(PREFS, MODE_PRIVATE);
+                if (sp.getBoolean("dock_enabled", true) && dockOverlay != null) {
+                    boolean dockRight = sp.getBoolean("dock_right", true);
+                    dockOverlay.show(dockRight);
+                    emit("[Car Dock] App picked -> Dock shown (" + (dockRight ? "RIGHT/RHD" : "LEFT/LHD") + ")");
+                }
+            } else if (!monitoring.get()) {
+                stopSelf();
             }
-            return START_STICKY;
+            return START_NOT_STICKY;
         }
         if (ACTION_HIDE_DOCK_FOR_LAUNCHER.equals(action)) {
             if (dockOverlay != null) dockOverlay.hide();
-            return START_STICKY;
+            if (!monitoring.get() && !carDisplayActive.get()) {
+                stopSelf();
+            }
+            return START_NOT_STICKY;
         }
         startMonitoring(false);
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override
@@ -398,6 +412,7 @@ public class CarModeService extends Service {
         if (dockOverlay != null) {
             dockOverlay.hide();
         }
+        CarLauncherActivity.finishIfOpen();
         if (audioController != null) {
             audioController.deactivateCarAudio();
         }
@@ -413,6 +428,7 @@ public class CarModeService extends Service {
         if (dockOverlay != null) {
             dockOverlay.hide();
         }
+        CarLauncherActivity.finishIfOpen();
         if (audioController != null) {
             audioController.deactivateCarAudio();
         }
